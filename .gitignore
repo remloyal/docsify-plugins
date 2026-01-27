@@ -1,0 +1,24 @@
+.DS_Store
+node_modules
+npm-debug.log
+# Directories
+.husky/_
+.idea
+.vercel
+_playwright-report
+_playwright-results
+node_modules
+
+# Files
+.DS_Store
+*.log
+
+# Exceptions
+!.gitkeep
+
+# Output folder for the global build only
+dist
+
+# TypeScript declaration files for standard ESM consumption
+src/**/*.d.ts
+src/**/*.d.ts.map
