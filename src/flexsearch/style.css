@@ -1,0 +1,247 @@
+/* prettier-ignore */
+:root {
+	--plugin-flexsearch-input-bg           : var(--form-element-bg);
+	--plugin-flexsearch-input-border-color : var(--sidebar-border-color);
+	--plugin-flexsearch-input-border-radius: var(--form-element-border-radius);
+	--plugin-flexsearch-input-color        : var(--form-element-color);
+	--plugin-flexsearch-kbd-bg             : var(--color-bg);
+	--plugin-flexsearch-kbd-border         : 1px solid var(--color-mono-3);
+	--plugin-flexsearch-kbd-border-radius  : 4px;
+	--plugin-flexsearch-kbd-color          : var(--color-mono-5);
+	--plugin-flexsearch-margin             : 10px;
+	--plugin-flexsearch-reset-bg           : var(--theme-color);
+	--plugin-flexsearch-reset-border       : transparent;
+	--plugin-flexsearch-reset-border-radius: var(--border-radius);
+	--plugin-flexsearch-reset-color        : #fff;
+}
+
+.flexsearch-search {
+  margin: var(--plugin-flexsearch-margin);
+}
+
+.flexsearch-search .input-wrap {
+  position: relative;
+}
+
+.flexsearch-search input {
+  width: 100%;
+  padding-inline-end: 36px;
+  border: 1px solid var(--plugin-flexsearch-input-border-color);
+  border-radius: var(--plugin-flexsearch-input-border-radius);
+  background: var(--plugin-flexsearch-input-bg);
+  color: var(--plugin-flexsearch-input-color);
+}
+
+.flexsearch-search input::-webkit-search-decoration,
+.flexsearch-search input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.flexsearch-search .clear-button,
+.flexsearch-search .kbd-group {
+  visibility: hidden;
+  display: flex;
+  gap: 0.15em;
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  opacity: 0;
+  translate: 0 -50%;
+  transition-property: opacity, visibility;
+  transition-duration: var(--duration-medium);
+}
+
+.flexsearch-search input:valid ~ .clear-button,
+.flexsearch-search input:invalid:where(:focus, :hover) ~ .kbd-group,
+.flexsearch-search .kbd-group:hover {
+  visibility: visible;
+  opacity: 1;
+}
+
+.flexsearch-search .clear-button {
+  --_button-size: 20px;
+  --_content-size: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--_button-size);
+  width: var(--_button-size);
+  border: var(--plugin-flexsearch-reset-border);
+  border-radius: var(--plugin-flexsearch-reset-border-radius);
+  background: var(--plugin-flexsearch-reset-bg);
+  cursor: pointer;
+}
+
+.flexsearch-search .clear-button::before,
+.flexsearch-search .clear-button::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: var(--_content-size);
+  color: var(--plugin-flexsearch-reset-color);
+  background: var(--plugin-flexsearch-reset-color);
+}
+
+.flexsearch-search .clear-button::before {
+  rotate: 45deg;
+}
+
+.flexsearch-search .clear-button::after {
+  rotate: -45deg;
+}
+
+.flexsearch-search kbd {
+  border: var(--plugin-flexsearch-kbd-border);
+  border-radius: var(--plugin-flexsearch-kbd-border-radius);
+  background: var(--plugin-flexsearch-kbd-bg);
+  color: var(--plugin-flexsearch-kbd-color);
+  font-size: var(--font-size-s);
+}
+
+.flexsearch-search a:hover {
+  color: var(--theme-color);
+}
+
+.flexsearch-search .results-panel:empty {
+  display: none;
+}
+
+.flexsearch-search:has(.results-panel:not(:empty)) ~ * {
+  display: none;
+}
+
+.flexsearch-search:where(:has(input:valid:focus), :has(.results-panel::empty))
+  ~ * {
+  opacity: 0.2;
+}
+
+.flexsearch-search .matching-post {
+  overflow: hidden;
+  padding: 1em 0 1.2em 0;
+  border-bottom: 1px solid var(--color-mono-2);
+}
+
+.flexsearch-search .matching-post:hover a {
+  text-decoration-color: transparent;
+}
+
+.flexsearch-search .matching-post:hover .title {
+  text-decoration: inherit;
+  text-decoration-color: var(--link-underline-color-hover);
+}
+
+.flexsearch-search .matching-post .title {
+  margin: 0 0 0.5em 0;
+  line-height: 1.4;
+}
+
+.flexsearch-search .matching-post .content {
+  margin: 0;
+  color: var(--color-mono-6);
+  font-size: var(--font-size-s);
+}
+
+.flexsearch-search .results-status {
+  margin-bottom: 0;
+  color: var(--color-mono-6);
+  font-size: var(--font-size-s);
+}
+
+.flexsearch-search .results-status:empty {
+  display: none;
+}
+
+/* Modal */
+/* ================================== */
+.flexsearch-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 9999;
+}
+
+.flexsearch-modal.is-open {
+  display: block;
+}
+
+.flexsearch-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.flexsearch-modal__dialog {
+  position: relative;
+  margin: 8vh auto 0 auto;
+  max-width: min(720px, calc(100vw - 24px));
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--sidebar-background, var(--color-bg));
+  border: 1px solid var(--sidebar-border-color, var(--color-mono-2));
+  border-radius: 10px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.flexsearch-modal__dialog .flexsearch-search {
+  margin: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.flexsearch-modal__dialog .flexsearch-search .results-panel {
+  overflow: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+/* Modal trigger (sidebar) */
+/* ================================== */
+.flexsearch-trigger {
+  margin: var(--plugin-flexsearch-margin);
+}
+
+.flexsearch-trigger .input-wrap {
+  position: relative;
+}
+
+.flexsearch-trigger input {
+  width: 100%;
+  padding-inline-end: 36px;
+  border: 1px solid var(--plugin-flexsearch-input-border-color);
+  border-radius: var(--plugin-flexsearch-input-border-radius);
+  background: var(--plugin-flexsearch-input-bg);
+  color: var(--plugin-flexsearch-input-color);
+  cursor: pointer;
+}
+
+.flexsearch-trigger .kbd-group {
+  visibility: hidden;
+  display: flex;
+  gap: 0.15em;
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  opacity: 0;
+  translate: 0 -50%;
+  transition-property: opacity, visibility;
+  transition-duration: var(--duration-medium);
+}
+
+.flexsearch-trigger input:where(:focus, :hover) ~ .kbd-group,
+.flexsearch-trigger .kbd-group:hover {
+  visibility: visible;
+  opacity: 1;
+}
+
+.flexsearch-trigger kbd {
+  border: var(--plugin-flexsearch-kbd-border);
+  border-radius: var(--plugin-flexsearch-kbd-border-radius);
+  background: var(--plugin-flexsearch-kbd-bg);
+  color: var(--plugin-flexsearch-kbd-color);
+  font-size: var(--font-size-s);
+}
