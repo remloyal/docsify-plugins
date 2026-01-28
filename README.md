@@ -37,7 +37,10 @@ reference [docsify-search](https://github.com/docsifyjs/docsify/blob/develop/src
         "/zh-cn/": "找不到结果",
         "/": "No Results",
       },
-
+      foundNumText: {
+        "/zh-cn/": (num) => `找到 ${num} 个结果`,
+        "/": (num) => `Found ${num} results`,
+      },
       // Headline depth, 1 - 6
       depth: 2,
 
@@ -94,5 +97,4 @@ reference [docsify-sidebar-collapse](https://github.com/iPeng6/docsify-sidebar-c
 
 <!-- plugins -->
 <script src="https://unpkg.com/@remloyal/docsify-plugins@latest/dist/sidebar-collapse/docsify-sidebar-collapse.min.js"></script>
-
 ```

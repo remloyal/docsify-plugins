@@ -22,6 +22,7 @@ let STATE = createState();
  * @type {{
  *   placeholder: string | Record<string, string>;
  *   noData: string | Record<string, string>;
+ *   foundNumText: ((num: number) => string) | Record<string, string | ((num: number) => string)>;
  *   paths: string[] | 'auto';
  *   depth: number;
  *   maxAge: number;
@@ -37,6 +38,7 @@ let STATE = createState();
 const CONFIG = {
   placeholder: "Type to search",
   noData: "No Results!",
+  foundNumText: (num) => `Found ${num} results`,
   paths: "auto",
   depth: 2,
   maxAge: 86400000, // 1 day
@@ -63,6 +65,8 @@ function createState() {
     uiReady: false,
     /** @type {string} */
     noDataText: "",
+    /** @type {(num: number) => string} */
+    foundNumText: null,
   };
 }
 
@@ -472,6 +476,17 @@ function updateNoData(text, path) {
   }
 }
 
+function updateFoundNumText(fn, path) {
+  if (typeof fn === "function") {
+    STATE.foundNumText = fn;
+  } else if (typeof fn === "object") {
+    const match = Object.keys(fn).filter((key) => path.indexOf(key) > -1)[0];
+    STATE.foundNumText = fn[match];
+  } else {
+    STATE.foundNumText = CONFIG.foundNumText;
+  }
+}
+
 function ensureUI(vm) {
   if (STATE.uiReady) {
     return;
@@ -740,7 +755,7 @@ async function doSearch(vm, value) {
   });
 
   setResultsHTML(html);
-  setStatus(items.length ? `Found ${items.length} results` : STATE.noDataText);
+  setStatus(items.length ? STATE.foundNumText(items.length) : STATE.noDataText);
 }
 
 function applyUserConfig(vm) {
@@ -754,6 +769,7 @@ function applyUserConfig(vm) {
     CONFIG.maxAge = util.isPrimitive(opts.maxAge) ? opts.maxAge : CONFIG.maxAge;
     CONFIG.placeholder = opts.placeholder || CONFIG.placeholder;
     CONFIG.noData = opts.noData || CONFIG.noData;
+    CONFIG.foundNumText = opts.foundNumText || CONFIG.foundNumText;
     CONFIG.depth = opts.depth || CONFIG.depth;
     CONFIG.namespace = opts.namespace || CONFIG.namespace;
     CONFIG.pathNamespaces = opts.pathNamespaces || CONFIG.pathNamespaces;
@@ -803,6 +819,7 @@ const install = function (hook, vm) {
     ensureUI(vm);
     updatePlaceholder(CONFIG.placeholder, vm.route.path);
     updateNoData(CONFIG.noData, vm.route.path);
+    updateFoundNumText(CONFIG.foundNumText, vm.route.path);
     void ensureIndex(CONFIG, vm);
   });
 
@@ -810,7 +827,7 @@ const install = function (hook, vm) {
     ensureUI(vm);
     updatePlaceholder(CONFIG.placeholder, vm.route.path);
     updateNoData(CONFIG.noData, vm.route.path);
-
+    updateFoundNumText(CONFIG.foundNumText, vm.route.path);
     // Auto mode: sidebar links may change after navigation
     if (CONFIG.paths === "auto") {
       void ensureIndex(CONFIG, vm);
