@@ -22,7 +22,10 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run build # 构建生成dist目录
+      - name: Build project
+        env:
+          ROLLUP_NATIVE: false
+        run: npm run build
 
   publish-npm:
     name: Publish to npm
@@ -36,7 +39,10 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm run build
+      - name: Build project
+        env:
+          ROLLUP_NATIVE: false
+        run: npm run build
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
