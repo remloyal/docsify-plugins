@@ -1,5 +1,5 @@
 {
-  "name": "docsify-plugins",
+  "name": "@remloyal/docsify-plugins",
   "version": "1.0.0",
   "description": "plugins for docsify",
   "main": "src",
