@@ -1,4 +1,4 @@
-.sidebar-nav > ul > li ul {
+.sidebar-nav>ul>li ul {
   display: none;
 }
 
@@ -6,20 +6,54 @@
   display: none;
 }
 
-.app-sub-sidebar.open {
+.app-sub-sidebar.sidebar-open {
   display: block;
 }
 
-.sidebar-nav .open > ul:not(.app-sub-sidebar),
-.sidebar-nav .active:not(.collapse) > ul {
+.sidebar-nav .sidebar-open>ul:not(.app-sub-sidebar),
+.sidebar-nav .active:not(.sidebar-collapse)>ul {
   display: block;
 }
 
 /* 抖动 */
-.sidebar-nav li.open:not(.collapse) > ul {
+.sidebar-nav li.open:not(.sidebar-collapse)>ul {
   display: block;
 }
 
-.active + ul.app-sub-sidebar {
+.active+ul.app-sub-sidebar {
   display: block;
+}
+
+
+.sidebar-nav li {
+  position: relative;
+  /* margin: 0; */
+  cursor: pointer
+}
+
+.sidebar-group {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+}
+
+.sidebar-nav .sidebar-group::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 40%;
+  right: 12px;
+  height: 6px;
+  width: 6px;
+  border-right: 1px solid #505d6b;
+  border-bottom: 1px solid #505d6b;
+  transform: rotate(-45deg);
+  transition: transform .1s
+}
+
+.sidebar-nav ul:not(.app-sub-sidebar)>li.sidebar-open>.sidebar-group::before {
+  transform: rotate(45deg)
+}
+.sidebar-nav ul:not(.app-sub-sidebar)>li.sidebar-collapse>.sidebar-group::before {
+  transform: rotate(-45deg)
 }
