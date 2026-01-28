@@ -5,6 +5,7 @@ Firstly, make sure that the [loadSidebar](https://docsify.js.org/#/configuration
 Then insert script into document just like the [official plugins](https://docsify.js.org/#/plugins)'s usage
 
 ## docsify-flexsearch
+
 reference [docsify-search](https://github.com/docsifyjs/docsify/blob/develop/src/plugins/search/index.js)
 
 ### Usage
@@ -64,9 +65,34 @@ reference [docsify-search](https://github.com/docsifyjs/docsify/blob/develop/src
 <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
 
 <!-- plugins -->
-<script src="flexsearch/docsify-flexsearch.min.js"></script>
+<script src="https://unpkg.com/@remloyal/docsify-plugins@latest/dist/flexsearch/docsify-flexsearch.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@remloyal/docsify-plugins@latest/dist/flexsearch/docsify-flexsearch.min.css"
+/>
 ```
 
 ## docsify-sidebar-collapse
 
 reference [docsify-sidebar-collapse](https://github.com/iPeng6/docsify-sidebar-collapse)
+
+### Usage
+
+```html
+<script>
+  window.$docsify = {
+    loadSidebar: true,
+    alias: {
+      '/.*/_sidebar.md': '/_sidebar.md',
+    },
+    subMaxLevel: 3,
+    ...
+    sidebarDisplayLevel: 1, // set sidebar display level
+  }
+</script>
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+
+<!-- plugins -->
+<script src="https://unpkg.com/@remloyal/docsify-plugins@latest/dist/sidebar-collapse/docsify-sidebar-collapse.min.js"></script>
+
+```
